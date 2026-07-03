@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klasifikasi Pisang Tanduk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #27ae60;
+            --dark: #2c3e50;
+            --bg: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--dark);
+        }
+
+        .upload-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        p.subtitle {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .drop-zone {
+            border: 2px dashed #cbd5e0;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            cursor: pointer;
+        }
+
+        .drop-zone:hover {
+            border-color: var(--primary);
+            background: #f0fff4;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-label {
+            display: block;
+            cursor: pointer;
+            color: #4a5568;
+        }
+
+        .upload-icon {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .btn-predict {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-predict:hover {
+            background-color: #219150;
+        }
+
+        .link-history {
+            display: inline-block;
+            margin-top: 20px;
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .link-history:hover {
+            text-decoration: underline;
+        }
+
+        #file-name {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="upload-card">
+        <h1>Klasifikasi Pisang Tanduk</h1>
+        <p class="subtitle">Unggah foto pisang untuk mendeteksi tingkat kematangannya secara akurat.</p>
+
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <div class="drop-zone" onclick="document.getElementById('file-input').click()">
+                <span class="upload-icon">📸</span>
+                <span class="file-label">Klik untuk pilih gambar atau tarik ke sini</span>
+                <div id="file-name"></div>
+                <input type="file" name="file" id="file-input" accept="image/*" required onchange="showFilename()">
+            </div>
+
+            <button type="submit" class="btn-predict">Mulai Klasifikasi</button>
+        </form>
+
+        <a href="/riwayat" class="link-history">Lihat Riwayat Klasifikasi</a>
+        <a href="/riwayat" class="link-history">Lihat Riwayat</a> | 
+        <a href="/evaluasi" class="link-history" style="color: #e67e22;">Statistik Model</a>
+    </div>
+
+    <script>
+        function showFilename() {
+            const input = document.getElementById('file-input');
+            const nameDisplay = document.getElementById('file-name');
+            nameDisplay.textContent = input.files[0] ? "File terpilih: " + input.files[0].name : "";
+        }
+    </script>
+</body>
+</html>

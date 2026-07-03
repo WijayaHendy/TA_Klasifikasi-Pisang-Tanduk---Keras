@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Klasifikasi Pisang</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #27ae60;
+            --dark: #2c3e50;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 40px 20px;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .btn-back {
+            text-decoration: none;
+            background: var(--dark);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .btn-back:hover { opacity: 0.8; }
+
+        /* --- Tampilan Tabel Modern --- */
+        .table-container {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #f8f9fa;
+        }
+
+        th {
+            padding: 18px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            border-bottom: 2px solid #edf2f7;
+        }
+
+        td {
+            padding: 15px 18px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background-color: #fcfcfc; }
+
+        /* --- Badge Warna Berdasarkan Hasil --- */
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-mentah { background: #e3f2fd; color: #1976d2; }
+        .badge-matang { background: #e8f5e9; color: #2e7d32; }
+        .badge-busuk { background: #fbe9e7; color: #d84315; }
+        .badge-bukan { background: #f5f5f5; color: #616161; }
+
+        .time-text {
+            color: #95a5a6;
+            font-size: 0.8rem;
+        }
+
+        .img-preview {
+            width: 45px;
+            height: 45px;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Riwayat Klasifikasi</h1>
+            <a href="/" class="btn-back">← Kembali</a>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Preview</th>
+                        <th>ID</th>
+                        <th>Nama File</th>
+                        <th>Hasil Klasifikasi</th>
+                        <th>Waktu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in data %}
+                    <tr>
+                        <td>
+                            <img src="{{ url_for('static', filename='uploads/' + item.filename) }}" class="img-preview">
+                        </td>
+                        <td><strong>#{{ item.id }}</strong></td>
+                        <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            {{ item.filename }}
+                        </td>
+                        <td>
+                            {% if item.hasil == 'Pisang Matang' %}
+                                <span class="badge badge-matang">{{ item.hasil }}</span>
+                            {% elif item.hasil == 'Pisang Mentah' %}
+                                <span class="badge badge-mentah">{{ item.hasil }}</span>
+                            {% elif item.hasil == 'Pisang Busuk' %}
+                                <span class="badge badge-busuk">{{ item.hasil }}</span>
+                            {% else %}
+                                <span class="badge badge-bukan">{{ item.hasil }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="time-text">
+                            {{ item.waktu.strftime('%d %b %Y, %H:%M') }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
