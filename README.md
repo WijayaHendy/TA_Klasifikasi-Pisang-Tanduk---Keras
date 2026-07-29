@@ -5,6 +5,7 @@ Repository ini berisi tentang Proyek Tugas Akhir Saya dengan menggunakan metode 
 Langkah-langkah:
 
 1.Instal Library TensorFlow
+
 import tensorflow as tf
 
 2.Persiapan Data:
